@@ -1,0 +1,87 @@
+ 
+{  "name":"Shield TV",
+    "manufacturer":"Nvidia",
+    "type":"GAMECONSOLE",
+    "version":6,
+    "discover":{
+       "welcomeheadertext":"Nvidia Shield TV",
+       "welcomedescription":"Created by Tom and Jac459",
+       "command": {"type":"mDNS", "command":"", "queryresult":"$[?(@.mac&&@.ip&&@.short)][?(@property === 'name' && @.match(/shield/i))]^"}   
+    },
+    "template":
+    {
+       "dynamicname":"DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").ip + \" - Nvidia Shield - \" + JSON.parse(\"$Result\").name DYNAMIK_INST_END",
+       "dynamicid":"DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").ip + JSON.parse(\"$Result\").name + JSON.parse(\"$Result\").short + JSON.parse(\"$Result\").mac DYNAMIK_INST_END",
+        "persistedvariables":{
+            "Certificate":""
+        },
+        "labels":{
+            "CurrentStatus" : {"label":".", "actionlisten":"MyStatus", "listen":"Message"}
+        },
+        "variables":{
+            "DeviceURI":"DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").ip DYNAMIK_INST_END",
+            "SearchCharacters":"[\"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]",
+            "ApplicationsList":"[{\"title\":\"plex\", \"url\":\"$PicURL/plex.png\", \"link\":\"plex://\"}, {\"title\":\"netflix\", \"url\":\"$PicURL/netflix.jpg\", \"link\":\"netflix://\"}, {\"title\":\"kodi\", \"url\":\"$PicURL/kodi.png\", \"link\":\"market://details?id=org.xbmc.kodi&launch\"}, {\"title\":\"Apple TV\", \"url\":\"$PicURL/Appletv.jpg\", \"link\":\"market://details?id=https://tv.apple.com&launch\"}, {\"title\":\"YouTube\", \"url\":\"$PicURL/Youtube.png\", \"link\":\"vnd.youtube://\"}, {\"title\":\"Spotify\", \"url\":\"$PicURL/Spotify.png\", \"link\":\"spotify://\"}, {\"title\":\"Disney\", \"url\":\"$PicURL/Disney.jpg\", \"link\":\"market://details?id=https://www.disneyplus.com&launch\"}, {\"title\":\"HBO Max\", \"url\":\"$PicURL/hbomax.jpg\", \"link\":\"hbomax://deeplink\"}]",
+            "AppLink":"",
+            "PicURL":"https://raw.githubusercontent.com/jac459/meta-shield/main/pics",
+            "Message":"",
+            "Code":"",
+            "MyStatus":"",
+            "VolumePlayed": 0
+        },
+        "listeners" : {
+            "AndroidListener" : {"type":"android", "command":{"connection":"$DeviceURI","certificate":"$Certificate", "message": "$Code"}, "queryresult" : "", "evalwrite":[{"variable":"Certificate","value":"DYNAMIK if (JSON.parse(\"$Result\").key != undefined) {let l = JSON.stringify(JSON.parse(\"$Result\").key); JSON.stringify(l).substring(1, JSON.stringify(l).length-1)}"}, {"variable":"Message","value":"DYNAMIK let l = JSON.parse(\"$Result\").message; l;"}], "evaldo":[{"test":"DYNAMIK JSON.parse(\"$Result\").key != undefined;","then":"__SAVE", "or":""}]      
+             }
+        },
+        "buttons":{    
+            "CURSOR LEFT": {"type":"android", "command":{"remoteKeyCode":21, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"CURSOR LEFT"}]},
+            "CURSOR RIGHT": {"type":"android", "command":{"remoteKeyCode":22, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"CURSOR RIGHT"}]},
+            "CURSOR UP": {"type":"android", "command":{"remoteKeyCode":19, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"CURSOR UP"}]},
+            "CURSOR DOWN": {"type":"android", "command":{"remoteKeyCode":20, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"CURSOR DOWN"}]},
+            "CURSOR ENTER": {"type":"android", "command":{"remoteKeyCode":23, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"CURSOR ENTER"}]},
+            "RECORD": {"type":"android", "command":{"remoteKeyCode":130, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"RECORD"}]},
+            "BACKWARD": {"type":"android", "command":{"remoteKeyCode":4, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"BACKWARD"}]},
+            "FORWARD": {"type":"android", "command":{"remoteKeyCode":89, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"FORWARD"}]},
+            "PREVIOUS": {"type":"android", "command":{"remoteKeyCode":4, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"BACKWARD"}]},
+            "NEXT": {"type":"android", "command":{"remoteKeyCode":90, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"NEXT"}]},
+            "MENU": {"type":"android", "command":{"remoteKeyCode":82, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"MENU"}]},
+            "MUTE TOGGLE": {"type":"android", "command":{"remoteKeyCode":164, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"MUTE TOGGLE"}]},
+            "PLAY TOGGLE": {"type":"android", "command":{"remoteKeyCode":85, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"PLAY TOGGLE"}]},
+            "INFO": {"type":"android", "command":{"remoteKeyCode":130, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"INFO"}]},
+            "VOLUME UP": {"type":"android", "command":{"remoteKeyCode":24, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"VOLUME UP"}]},
+            "VOLUME DOWN": {"type":"android", "command":{"remoteKeyCode":25, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"VOLUME DOWN"}]},
+            "POWER": {"type":"android", "command":{"remoteKeyCode":26, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"POWER"}]},
+            "BACK": {"type":"android", "command":{"remoteKeyCode":4, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"BACK"}]},
+            "NETFLIX": {"type":"android", "command":{"remoteKeyCode":4, "remoteDirection":3}, "evalwrite":[{"variable":"MyStatus","value":"BACKWARD"}]},
+            "EXIT": {"type":"android", "command":{"appLink":"market://details?id=com.google.android.tvlauncher&launch"}, "evalwrite":[{"variable":"MyStatus","value":"EXIT"}]},
+            "HOME": {"type":"android", "command":{"appLink":"com.google.android.tvlauncher"}, "evalwrite":[{"variable":"MyStatus","value":"HOME"}]},
+             
+              
+            "POWER ON": {"type":".", "command":"", "queryresult":"", "evaldo":[{"test":true,"then":"__INITIALISE", "or":""}], "evalwrite":[{"variable":"MyState","value":"Intenting connection to your Shield..."}]},
+            "POWER OFF": {"type":".", "command":"", "queryresult":"", "evaldo":[{"test":true,"then":"__CLEANUP", "or":""}]},
+            "__LAUNCH": {"type":"android", "command":{"appLink":"$AppLink"}},
+            "__REGISTER": {"type":"android", "command":{"register":true, "message": "$Code"}},        
+            "__SAVE": {"type":"static", "command":".", "evaldo":[{"test":true,"then":"__PERSIST", "or":""}, {"test":true,"then":"__WRAPUP", "or":""}, {"test":true,"then":"__INITIALISE", "or":""}]}      
+         },
+        "directories":{
+            "Launch": {"label":"", 
+                 "feeders": {                
+                    "ChooseApp":{"label":"", "commandset": [
+                        {"type":"static", "command":"$ApplicationsList", "itemtype":"tile", "queryresult":"$.*", "itemaction":"launch", "itemUI":"", "itemname":"DYNAMIK JSON.parse(\"$Result\").title", "itemimage":"DYNAMIK JSON.parse(\"$Result\").url", "evalwrite":[{"variable":"AppLink","value":"DYNAMIK JSON.parse(\"$Result\").link"}]}
+                    ]},
+                    "launch":{"label":"", "commandset": [{"type":"android", "command":{"appLink":"$AppLink"}}]}
+                }
+            },
+            "Register": {"label":"", 
+                "feeders": {                
+                "Type your code":{"label":"Insert Shield Security Code", "commandset": [
+                    {"type":"static", "command":"DYNAMIK if (\"$Code\".length >= 6) {\".\"} else {\"\"}", "itemtype":"", "queryresult":"$.*", "itemUI":"goToRoot", "itemname":"Save $Code", "itemaction": "", "evaldo":[{"test":true, "then":"__REGISTER", "or":""}]},
+                    {"type":"static", "command":".", "itemtype":"", "queryresult":"$.*", "itemUI":"reload", "itemname":"Delete", "itemaction": "", "evalnext":[{"test":true, "then":"Type your code"}], "evalwrite":[{"variable":"Code","value":"DYNAMIK let s = \"$Code\"; if (s.length>0); s = s.substr(0, s.length -1); s"}]},
+                    {"type":"static", "command":"DYNAMIK if (\"$Code\".length < 6) {$SearchCharacters} else {\"\"}", "itemtype":"", "queryresult":"$.*", "itemUI":"reload", "itemname":"$Code $Result", "itemaction": "", "evalnext":[{"test":true, "then":"Type your code"}], "evalwrite":[{"variable":"Code","value":"DYNAMIK let s = \"$Code$Result\"; s;"}]}
+                ]}
+                }
+            }
+        }
+    }
+}   
+
