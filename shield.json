@@ -5,7 +5,7 @@
     "version":6,
     "discover":{
        "welcomeheadertext":"Nvidia Shield TV",
-       "welcomedescription":"Created by Tom and Jac459",
+       "welcomedescription":"Created by thomasm789 and Jac459",
        "command": {"type":"mDNS", "command":"", "queryresult":"$[?(@.mac&&@.ip&&@.short)][?(@property === 'name' && @.match(/shield/i))]^"}   
     },
     "template":
